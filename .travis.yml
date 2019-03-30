@@ -6,13 +6,3 @@ script:
     - npm test
 after_success:
     - npm run build
-    - npm run publish:prepare
-    - npm run publish
-before_deploy:
-    - cp package.json dist/src/
-deploy:
-    skip_cleanup: true
-    provider: script
-    script: npm publish dist/src
-    on:
-        tags: true
