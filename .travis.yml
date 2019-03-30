@@ -8,9 +8,9 @@ after_success:
     - npm run build
 deploy:
     provider: npm
+    email: ${npm_email}
     api_key: ${npm_access_token}
     on:
         branch: release
-        email: ${npm_email}
         tags: true
         skip_cleanup: true
