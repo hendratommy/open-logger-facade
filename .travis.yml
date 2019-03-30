@@ -9,8 +9,8 @@ after_success:
 before_deploy:
     - npm run publish:prepare
 deploy:
+    skip_cleanup: true
     provider: script
-    script: npm publis dist/src
+    script: npm publish dist/src
     on:
         tags: true
-        skip_cleanup: true
