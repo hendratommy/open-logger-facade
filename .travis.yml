@@ -6,6 +6,7 @@ script:
     - npm test
 after_success:
     - npm run build
+    - npm run publish:prepare
 before_deploy:
     - npm run publish:prepare
 deploy:
