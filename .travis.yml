@@ -6,6 +6,8 @@ script:
     - npm test
 after_success:
     - npm run build
+before_deploy:
+    - npm run build:prod
 deploy:
     provider: npm
     email: ${npm_email}
