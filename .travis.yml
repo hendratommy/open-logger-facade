@@ -7,10 +7,10 @@ script:
 after_success:
     - npm run build
 before_deploy:
-    - cp package.json $TRAVIS_BUILD_DIR/dist/src/
+    - cp package.json dist/src/
 deploy:
     skip_cleanup: true
     provider: script
-    script: npm publish $TRAVIS_BUILD_DIR/dist/src
+    script: npm publish dist/src
     on:
         tags: true
