@@ -13,7 +13,7 @@
     },
     "scripts": {
         "build": "rm -rf dist && npm run lint && tsc -p tsconfig.json",
-        "publish:prepare": "cp package.json ${TRAVIS_BUILD_DIR}/dist/src/",
+        "publish:prepare": "cp package.json $TRAVIS_BUILD_DIR/dist/src/",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "test": "mocha -r tsconfig-paths/register -r ts-node/register test/**/*.spec.ts"
     },

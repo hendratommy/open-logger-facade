@@ -11,6 +11,6 @@ before_deploy:
 deploy:
     skip_cleanup: true
     provider: script
-    script: npm publish dist/src
+    script: npm publish $TRAVIS_BUILD_DIR/dist/src
     on:
         tags: true
