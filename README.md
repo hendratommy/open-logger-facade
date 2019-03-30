@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.com/hendratommy/open-logger-facade.svg?branch=master)](https://travis-ci.com/hendratommy/open-logger-facade)
-
 # open-logger-facade
+
+[![Build Status](https://travis-ci.com/hendratommy/open-logger-facade.svg?branch=master)](https://travis-ci.com/hendratommy/open-logger-facade)
 
 A simple logger facade for NodeJS, an abstraction class for logging. Works and tested with winston and pino.
 If you're working with TypeScript, you might want to use `@Logger` decorator (required `reflect-metadata`).
