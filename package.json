@@ -10,7 +10,7 @@
     "scripts": {
         "build": "npm run lint && tsc -p tsconfig.json",
         "lint": "tslint -p tsconfig.json -c tslint.json",
-        "test": "mocha -r tsconfig-paths/register -r ts-node/register test/**/*.spec.ts && exit 0"
+        "test": "mocha -r tsconfig-paths/register -r ts-node/register test/**/*.spec.ts"
     },
     "keywords": [
         "logger",
