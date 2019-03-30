@@ -1,7 +1,7 @@
 # open-logger-facade
 
-A simple logger facade for NodeJS, an abstraction class for logging with extra @Logger decorator. Works with winston and pino.
-If you're working with TypeScript, you might want to use @Logger decorator (required `reflect-metadata`) to provide an DI.
+A simple logger facade for NodeJS, an abstraction class for logging. Works and tested with winston and pino.
+If you're working with TypeScript, you might want to use `@Logger` decorator (required `reflect-metadata`).
 
 ## Installation
 
