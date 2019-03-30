@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import { describe } from "mocha";
-import LoggerFactory, { ILogger, LoggerContext } from "../src";
 import { hookConsole, createWinstonLogger } from "./test-helper";
 import { expect } from "chai";
 import * as pino from "pino";
 import * as split from "split2";
-import { Logger } from "../src/decorators/Logger";
+import LoggerFactory, { ILogger, LoggerContext } from "open-logger-facade";
+import { Logger } from "open-logger-facade/decorators/Logger";
 
 describe(`logging using winston`, () => {
     const message = `this is a message`;

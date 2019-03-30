@@ -15,7 +15,11 @@
         "strictNullChecks": true,
         "pretty": true,
         "removeComments": true,
-        "baseUrl": "./"
+        "baseUrl": "src",
+        "paths": {
+            "open-logger-facade": ["index"],
+            "open-logger-facade/*": ["*"]
+        }
     },
     "exclude": ["node_modules", "dist"]
 }
