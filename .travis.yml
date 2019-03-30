@@ -6,13 +6,5 @@ script:
     - npm test
 after_success:
     - npm run build
-before_deploy:
-    - npm run build:prod
-deploy:
-    provider: npm
-    email: ${npm_email}
-    api_key: ${npm_access_token}
-    on:
-        branch: release
-        tags: true
-        skip_cleanup: true
+    - npm run publish:prepare
+    - npm publish
