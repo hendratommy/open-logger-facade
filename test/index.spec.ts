@@ -4,8 +4,8 @@ import { hookConsole, createWinstonLogger } from "./test-helper";
 import { expect } from "chai";
 import * as pino from "pino";
 import * as split from "split2";
-import LoggerFactory, { LoggerContext } from "open-logger-facade";
-import { Logger } from "open-logger-facade/decorators/Logger";
+import LoggerFactory, { LoggerContext } from "../src";
+import { Logger } from "../src/decorators/Logger";
 // import winston = require("winston");
 
 describe(`logging using winston`, () => {
