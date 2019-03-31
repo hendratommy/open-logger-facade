@@ -4,8 +4,7 @@
     "description": "A simple logger facade for NodeJS, an abstraction helper class for logging.",
     "author": "Hendra Tommy Wijaya <hendra.tommy.w@gmail.com>",
     "license": "MIT",
-    "main": "index.js",
-    "types": "index.d.ts",
+    "main": "dist/src/index.js",
     "private": false,
     "repository": {
         "type": "git",
