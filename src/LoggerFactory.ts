@@ -1,7 +1,7 @@
 import { LoggerContext } from "./LoggerContext";
 
 export class LoggerFactory {
-    public static getLogger() {
-        return LoggerContext.getInstance().getLogger();
+    public static getLogger<T>() {
+        return LoggerContext.getInstance().getLogger<T>();
     }
 }

@@ -1,5 +1,3 @@
-import { Logger } from "./Logger";
-
 export class LoggerContext {
     public static getInstance() {
         if (!LoggerContext.instance) {
@@ -9,18 +7,18 @@ export class LoggerContext {
     }
 
     public static use(loggerImpl: any) {
-        LoggerContext.getInstance().setLogger(new Logger(loggerImpl));
+        LoggerContext.getInstance().setLogger(loggerImpl);
     }
     private static instance: LoggerContext;
-    private logger: Logger;
+    private logger: any;
     private constructor() {
-        this.logger = new Logger(console);
+        this.logger = console;
     }
 
-    public setLogger(logger: Logger) {
+    public setLogger(logger: any) {
         this.logger = logger;
     }
-    public getLogger() {
-        return this.logger;
+    public getLogger<T>() {
+        return this.logger as T;
     }
 }

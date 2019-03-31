@@ -1,14 +1,14 @@
 import "reflect-metadata";
 import * as Pino from "pino";
 import { createWinstonLogger } from "../test/test-helper";
-import { LoggerContext, LoggerFactory } from "../src";
+import { LoggerContext, LoggerFactory, ILogger } from "../src";
 import { MyClass } from "./MyClass";
 
 const pino = Pino({ level: "trace" });
 const winston = createWinstonLogger({ level: "trace" });
 
 LoggerContext.use(winston);
-let logger = LoggerFactory.getLogger();
+let logger = LoggerFactory.getLogger<ILogger>();
 logger.fatal(`fatal using winston`);
 logger.error(`error using winston`);
 logger.warn(`warn using winston`);

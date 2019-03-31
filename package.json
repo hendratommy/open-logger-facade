@@ -1,6 +1,6 @@
 {
     "name": "open-logger-facade",
-    "version": "0.0.9",
+    "version": "0.0.14",
     "description": "A simple logger facade for NodeJS, an abstraction class for logging.",
     "author": "Hendra Tommy Wijaya <hendra.tommy.w@gmail.com>",
     "license": "MIT",
@@ -13,8 +13,8 @@
     },
     "scripts": {
         "build": "rm -rf dist && npm run lint && tsc -p tsconfig.json",
-        "publish:prepare": "cp package.json dist/src/",
-        "publish": "npm publish dist/src",
+        "release:prepare": "cp package.json dist/src/",
+        "release": "npm publish dist/src",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "test": "mocha -r tsconfig-paths/register -r ts-node/register test/**/*.spec.ts"
     },

@@ -1,5 +1,9 @@
 import * as winston from "winston";
 
+export interface IEnhancedWinstonLogger extends winston.Logger {
+    fatal: winston.LeveledLogMethod;
+}
+
 export function hookConsole(stream: any, fn: (...args: any) => void) {
     const oldWrite = stream.write;
     stream.write = fn;

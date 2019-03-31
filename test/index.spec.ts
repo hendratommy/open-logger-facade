@@ -4,8 +4,9 @@ import { hookConsole, createWinstonLogger } from "./test-helper";
 import { expect } from "chai";
 import * as pino from "pino";
 import * as split from "split2";
-import LoggerFactory, { ILogger, LoggerContext } from "open-logger-facade";
+import LoggerFactory, { LoggerContext } from "open-logger-facade";
 import { Logger } from "open-logger-facade/decorators/Logger";
+// import winston = require("winston");
 
 describe(`logging using winston`, () => {
     const message = `this is a message`;
@@ -16,7 +17,7 @@ describe(`logging using winston`, () => {
         done();
     });
     describe(`leveled log filter`, () => {
-        let logger: ILogger;
+        let logger: any;
         let logOutput: any;
         let unhookConsole: any;
 
@@ -59,7 +60,7 @@ describe(`logging using winston`, () => {
     });
 
     describe(`logging using leveled log method`, () => {
-        let logger: ILogger;
+        let logger: any;
         let logOutput: any;
         let unhookConsole: any;
         beforeEach((done) => {
@@ -125,7 +126,7 @@ describe(`logging using pino`, () => {
         done();
     });
     describe(`leveled log filter`, () => {
-        let logger: ILogger;
+        let logger: pino.Logger;
         const message = `this is a message`;
         let otherLogOutput: any;
         beforeEach((done) => {
@@ -160,7 +161,7 @@ describe(`logging using pino`, () => {
     });
     //
     describe(`logging using leveled log method`, () => {
-        let logger: ILogger;
+        let logger: pino.Logger;
         const message = `this is a message`;
         beforeEach((done) => {
             logger = LoggerFactory.getLogger();
@@ -210,7 +211,7 @@ describe(`logging using pino`, () => {
 
 class MyClass {
     @Logger()
-    logger!: ILogger;
+    logger!: pino.Logger;
 
     handleLog(
         level: "fatal" | "error" | "warn" | "info" | "debug" | "trace",
