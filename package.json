@@ -1,6 +1,6 @@
 {
     "name": "open-logger-facade",
-    "version": "0.0.15",
+    "version": "0.0.16",
     "description": "A simple logger facade for NodeJS, an abstraction helper class for logging.",
     "author": "Hendra Tommy Wijaya <hendra.tommy.w@gmail.com>",
     "license": "MIT",
