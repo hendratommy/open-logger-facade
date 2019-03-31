@@ -3,12 +3,12 @@
 [![Build Status](https://travis-ci.com/hendratommy/open-logger-facade.svg?branch=master)](https://travis-ci.com/hendratommy/open-logger-facade)
 
 A simple logger facade for NodeJS, an abstraction class for logging. Works and tested with winston and pino.
-If you're working with TypeScript, you might want to use `@Logger` decorator (required `reflect-metadata`).
+If you're working with TypeScript, you might want to use `@Logger` decorator (require `reflect-metadata`).
 
 ## Installation
 
 ```
-
+npm install -S open-logger-facade
 ```
 
 ## Usage
@@ -36,21 +36,15 @@ class OtherClass {
         logger.debug(`debug message`);
     }
 }
+// This is useful when you have Service or Repository classes, you can get logger instance without passing it around as parameter
 ```
 
-`open-logger-facade` is just an simple interface to bridge between your code and logger library, the idea is to create SLF4J like for NodeJS.
-This way your project is loosely coupled with any logger library, and you can switch between logger libraries very easily.
+`open-logger-facade` is just an simple interface to bridge between your code and logger library, the idea is to decoupled code with logger implementation.
+This way your project is loosely coupled with any logger library, and you can switch between logger libraries very easily (given the logger implementation is using the same leveled method `fatal`, `error`, `warn`, `info`, `debug`, and `trace`).
 
-`open-logger-facade` required the logger implementation to implement leveled method, `open-logger-facade` use 5 levels:
+In case you're using `winston`, it is recommended you're changing the levels to match above levels. This way, you can switch with other loggers such as `pino` or `bunyan` without refactoring your codes too much. See `examples/WinstonExample.js` and `examples/WinstonExampleTS.ts` if you're using `TypeScript`.
 
--   `fatal`
--   `error`
--   `warn`
--   `info`
--   `debug`
--   `trace`
-
-`pino` and `bunyan` also had those levels, so they should works out of the box with `open-logger-facade`. If you're using `winston` you need to use custom levels and configure it to use the same levels as required by `open-logger-facade`.
+`pino` and `bunyan` also had those levels, so they should works out of the box with `open-logger-facade`.
 
 ## Configuring winston
 
@@ -72,10 +66,10 @@ const winstonLogger = winston.createLogger({
         }
     });
 
-LoggerContext.use(winston);
+LoggerContext.use(winstonLogger);
 const logger = LoggerFactory.getLogger();
 
-logger.info(`Hello World!`);
+logger.trace(`Hello World!`);
 ```
 
 ## @Logger decorator
@@ -100,6 +94,7 @@ npm install -S reflect-metadata
 `MyClass.ts`
 
 ```
+import { Logger } from "open-logger-facade/decorators/Logger";
 class MyClass {
     @Logger()
     logger!: ILogger;

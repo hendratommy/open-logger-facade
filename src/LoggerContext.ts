@@ -1,5 +1,3 @@
-import { ILogger } from "./types";
-
 export class LoggerContext {
     public static getInstance() {
         if (!LoggerContext.instance) {
@@ -8,17 +6,17 @@ export class LoggerContext {
         return LoggerContext.instance;
     }
 
-    public static use(loggerImpl: ILogger) {
+    public static use(loggerImpl: any) {
         LoggerContext.getInstance().setLogger(loggerImpl);
     }
     private static instance: LoggerContext;
-    private logger?: ILogger;
+    private logger?: any;
     private constructor() {}
 
-    public setLogger(logger: ILogger) {
+    public setLogger(logger: any) {
         this.logger = logger;
     }
-    public getLogger<T extends ILogger>() {
-        return this.logger as T;
+    public getLogger() {
+        return this.logger;
     }
 }
