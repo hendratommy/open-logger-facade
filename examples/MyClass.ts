@@ -1,5 +1,5 @@
 import { Logger } from "../src/decorators/Logger";
-import { ILogger } from "../src";
+import { ILogger } from "../src/types";
 
 export class MyClass {
     @Logger()

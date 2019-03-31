@@ -1,7 +1,8 @@
 import "reflect-metadata";
 import * as Pino from "pino";
 import { createWinstonLogger } from "../test/test-helper";
-import { LoggerContext, LoggerFactory, ILogger } from "../src";
+import { LoggerContext, LoggerFactory } from "../src";
+import { ILogger } from "../src/types";
 import { MyClass } from "./MyClass";
 
 const pino = Pino({ level: "trace" });
