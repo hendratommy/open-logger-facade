@@ -1,3 +1,5 @@
+import { INamedLoggers } from "./types";
+
 export class LoggerContext {
     public static getInstance() {
         if (!LoggerContext.instance) {
@@ -6,17 +8,26 @@ export class LoggerContext {
         return LoggerContext.instance;
     }
 
-    public static use(loggerImpl: any) {
-        LoggerContext.getInstance().setLogger(loggerImpl);
+    public static add(loggerImpl: any, loggerName?: string) {
+        LoggerContext.getInstance().addLogger(loggerImpl, loggerName);
     }
     private static instance: LoggerContext;
-    private logger?: any;
-    private constructor() {}
-
-    public setLogger(logger: any) {
-        this.logger = logger;
+    private loggers: INamedLoggers;
+    private constructor() {
+        this.loggers = {};
     }
-    public getLogger() {
-        return this.logger;
+
+    public addLogger(loggerImpl: any, loggerName?: string) {
+        if (!loggerName) {
+            this.loggers.root = loggerImpl;
+        } else {
+            if (!this.loggers.root) {
+                this.loggers.root = loggerImpl;
+            }
+            this.loggers[loggerName] = loggerImpl;
+        }
+    }
+    public getLogger(loggerName?: string) {
+        return this.loggers[loggerName ? loggerName : "root"];
     }
 }

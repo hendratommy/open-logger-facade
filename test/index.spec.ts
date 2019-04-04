@@ -8,29 +8,24 @@ import LoggerFactory, { LoggerContext } from "../src";
 import { Logger } from "../src/decorators/Logger";
 // import winston = require("winston");
 
+LoggerContext.add(pino()); // root logger
+LoggerContext.add(createWinstonLogger(), "winston");
+LoggerContext.add(
+    createWinstonLogger({
+        level: `info`
+    }),
+    "winston-info"
+);
+
 describe(`logging using winston`, () => {
     const message = `this is a message`;
-
-    beforeEach((done) => {
-        const logger = createWinstonLogger();
-        LoggerContext.use(logger);
-        done();
-    });
     describe(`leveled log filter`, () => {
         let logger: any;
         let logOutput: any;
         let unhookConsole: any;
 
         beforeEach((done) => {
-            LoggerContext.use(
-                createWinstonLogger({
-                    level: `info`
-                })
-            );
-            done();
-        });
-        beforeEach((done) => {
-            logger = LoggerFactory.getLogger();
+            logger = LoggerFactory.getLogger("winston-info");
             unhookConsole = hookConsole(
                 process.stdout,
                 (text: string, encoding: string, fd: any) => {
@@ -64,7 +59,7 @@ describe(`logging using winston`, () => {
         let logOutput: any;
         let unhookConsole: any;
         beforeEach((done) => {
-            logger = LoggerFactory.getLogger();
+            logger = LoggerFactory.getLogger("winston");
             unhookConsole = hookConsole(
                 process.stdout,
                 (text: string, encoding: string, fd: any) => {
@@ -114,8 +109,8 @@ describe(`logging using winston`, () => {
 
 describe(`logging using pino`, () => {
     let logOutput: any;
-    beforeEach((done) => {
-        LoggerContext.use(
+    before((done) => {
+        LoggerContext.add(
             pino(
                 { level: "trace" },
                 split((data) => {
@@ -129,19 +124,20 @@ describe(`logging using pino`, () => {
         let logger: pino.Logger;
         const message = `this is a message`;
         let otherLogOutput: any;
-        beforeEach((done) => {
-            LoggerContext.use(
+        before((done) => {
+            LoggerContext.add(
                 pino(
                     { level: "info" },
                     split((data) => {
                         otherLogOutput = JSON.parse(data);
                     })
-                )
+                ),
+                "pino-info"
             );
             done();
         });
         beforeEach((done) => {
-            logger = LoggerFactory.getLogger();
+            logger = LoggerFactory.getLogger("pino-info");
             otherLogOutput = undefined;
             done();
         });
@@ -211,30 +207,37 @@ describe(`logging using pino`, () => {
 
 class MyClass {
     @Logger()
-    logger!: pino.Logger;
+    rootLogger!: pino.Logger;
+    @Logger("other-pino")
+    namedLogger!: pino.Logger;
 
     handleLog(
         level: "fatal" | "error" | "warn" | "info" | "debug" | "trace",
-        message: string
+        message: string,
+        namedLogger?: boolean
     ) {
+        let logger = this.rootLogger;
+        if (namedLogger) {
+            logger = this.namedLogger;
+        }
         switch (level) {
             case "fatal":
-                this.logger.fatal(message);
+                logger.fatal(message);
                 break;
             case "error":
-                this.logger.error(message);
+                logger.error(message);
                 break;
             case "warn":
-                this.logger.warn(message);
+                logger.warn(message);
                 break;
             case "info":
-                this.logger.info(message);
+                logger.info(message);
                 break;
             case "debug":
-                this.logger.debug(message);
+                logger.debug(message);
                 break;
             case "trace":
-                this.logger.trace(message);
+                logger.trace(message);
                 break;
             default:
                 break;
@@ -244,14 +247,24 @@ class MyClass {
 
 describe(`logging using @Logger decorator`, () => {
     let logOutput: any;
-    beforeEach((done) => {
-        LoggerContext.use(
+    let otherLogOutput: any;
+    before((done) => {
+        LoggerContext.add(
             pino(
                 { level: "trace" },
                 split((data) => {
                     logOutput = JSON.parse(data);
                 })
             )
+        );
+        LoggerContext.add(
+            pino(
+                { level: "trace", messageKey: "otherMsg" },
+                split((data) => {
+                    otherLogOutput = JSON.parse(data);
+                })
+            ),
+            "other-pino"
         );
         done();
     });
@@ -298,6 +311,53 @@ describe(`logging using @Logger decorator`, () => {
             expect(logOutput).to.include({
                 level: pino.levels.values.trace,
                 msg: message
+            });
+        });
+    });
+
+    describe(`logging using named logger decorator`, () => {
+        const myClass = new MyClass();
+        const message = `this is a message`;
+        beforeEach((done) => {
+            otherLogOutput = undefined;
+            done();
+        });
+
+        it(`should include`, () => {
+            myClass.handleLog(`fatal`, message, true);
+            expect(otherLogOutput).to.include({
+                level: pino.levels.values.fatal,
+                otherMsg: message
+            });
+
+            myClass.handleLog(`error`, message, true);
+            expect(otherLogOutput).to.include({
+                level: pino.levels.values.error,
+                otherMsg: message
+            });
+
+            myClass.handleLog(`warn`, message, true);
+            expect(otherLogOutput).to.include({
+                level: pino.levels.values.warn,
+                otherMsg: message
+            });
+
+            myClass.handleLog(`info`, message, true);
+            expect(otherLogOutput).to.include({
+                level: pino.levels.values.info,
+                otherMsg: message
+            });
+
+            myClass.handleLog(`debug`, message, true);
+            expect(otherLogOutput).to.include({
+                level: pino.levels.values.debug,
+                otherMsg: message
+            });
+
+            myClass.handleLog(`trace`, message, true);
+            expect(otherLogOutput).to.include({
+                level: pino.levels.values.trace,
+                otherMsg: message
             });
         });
     });

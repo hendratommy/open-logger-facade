@@ -11,7 +11,7 @@ const winstonLogger = winston.createLogger(
     })
 );
 
-LoggerContext.use(winstonLogger);
+LoggerContext.add(winstonLogger);
 const logger = LoggerFactory.getLogger<winston.Logger>();
 logger.verbose(`Hello World`);
 
@@ -43,7 +43,7 @@ const customLevelWinston = winston.createLogger({
     }
 });
 
-LoggerContext.use(customLevelWinston);
+LoggerContext.add(customLevelWinston);
 const iLogger = LoggerFactory.getLogger<ILogger>();
 
 iLogger.trace(`now its better`);

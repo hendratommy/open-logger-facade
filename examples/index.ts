@@ -19,16 +19,17 @@ const winstonLogger = winston.createLogger({
     }
 });
 
-LoggerContext.use(winstonLogger);
-let logger = LoggerFactory.getLogger<ILogger>();
+LoggerContext.add(pino({ level: "trace" })); // as root logger
+LoggerContext.add(winstonLogger, "winston");
+
+let logger = LoggerFactory.getLogger<ILogger>("winston");
 logger.fatal(`fatal using winston`);
 logger.error(`error using winston`);
 logger.warn(`warn using winston`);
 logger.info(`info using winston`);
 logger.debug(`debug using winston`);
 
-LoggerContext.use(pino({ level: "trace" }));
-logger = LoggerFactory.getLogger();
+logger = LoggerFactory.getLogger(); // use root logger
 logger.fatal(`fatal using pino`);
 logger.error(`error using pino`);
 logger.warn(`warn using pino`);

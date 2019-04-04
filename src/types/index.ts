@@ -18,3 +18,7 @@ export interface ILogger {
     debug: ILeveledLogMethod;
     trace: ILeveledLogMethod;
 }
+
+export interface INamedLoggers {
+    [name: string]: any;
+}
