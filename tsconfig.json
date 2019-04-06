@@ -1,25 +1,25 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "outDir": "dist",
-        "target": "es2017",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "declaration": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "noImplicitAny": true,
-        "noUnusedLocals": true,
-        "strictNullChecks": true,
-        "pretty": true,
-        "removeComments": true,
-        "baseUrl": "src",
-        "paths": {
-            "open-logger-facade": ["index"],
-            "open-logger-facade/*": ["*"]
-        }
-    },
-    "exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "dist",
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "pretty": true,
+    "removeComments": true,
+    "baseUrl": "./src",
+    "paths": {
+      "open-logger-facade": ["index"],
+      "open-logger-facade/*": ["*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
 }

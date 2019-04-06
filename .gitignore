@@ -60,6 +60,14 @@ typings/
 # next.js build output
 .next
 
+# Visual Studio
+*.sln
+*.njsproj
+*.njsproj.user
+.vs
+bin/
+obj/
+
 .vscode
 /test/user-test.ts
 
