@@ -1,4 +1,5 @@
-import { INamedLoggers } from "./types";
+import { INamedLoggers, IConfigureOptions } from "./types";
+import { EmptyLogger } from "./EmptyLogger";
 
 export class LoggerContext {
     public static getInstance() {
@@ -11,10 +12,25 @@ export class LoggerContext {
     public static add(loggerImpl: any, loggerName?: string) {
         LoggerContext.getInstance().addLogger(loggerImpl, loggerName);
     }
+
+    public static configure(options: IConfigureOptions) {
+        const instance = LoggerContext.getInstance();
+        if (options.hasOwnProperty("useEmptyLogger")) {
+            instance.useEmptyLogger = options.useEmptyLogger!;
+        }
+        options.loggers.forEach((logger) => {
+            instance.addLogger(logger.logger, logger.name);
+        });
+    }
+
     private static instance: LoggerContext;
     private loggers: INamedLoggers;
+    private emptyLogger: EmptyLogger;
+    private useEmptyLogger: boolean;
     private constructor() {
         this.loggers = {};
+        this.useEmptyLogger = true;
+        this.emptyLogger = new EmptyLogger();
     }
 
     public addLogger(loggerImpl: any, loggerName?: string) {
@@ -28,6 +44,10 @@ export class LoggerContext {
         }
     }
     public getLogger(loggerName?: string) {
-        return this.loggers[loggerName ? loggerName : "root"];
+        const logger = this.loggers[loggerName ? loggerName : "root"];
+        if (!logger && this.useEmptyLogger) {
+            return this.emptyLogger;
+        }
+        return logger;
     }
 }

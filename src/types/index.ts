@@ -22,3 +22,13 @@ export interface ILogger {
 export interface INamedLoggers {
     [name: string]: any;
 }
+
+export interface ILoggersOption {
+    name: string;
+    logger: any;
+}
+
+export interface IConfigureOptions {
+    useEmptyLogger?: boolean;
+    loggers: ILoggersOption[];
+}
